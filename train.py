@@ -14,7 +14,8 @@ random.seed(SEED)
 np.random.seed(SEED)
 torch.manual_seed(SEED)
 
-learning_rate = float(sys.argv[1]) if len(sys.argv) > 1 else 0.01
+opt_choice = sys.argv[1].lower() if len(sys.argv) > 1 else 'adam'
+learning_rate = float(sys.argv[2]) if len(sys.argv) > 2 else 0.01
 device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu" )
 
 #Cleaning and Processing Data
@@ -85,15 +86,18 @@ class HouseNet(nn.Module):
 
 model = HouseNet().to(device)
 criterion = nn.MSELoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+if opt_choice == 'sgd':
+    optimizer = optim.SGD(model.parameters(), lr=learning_rate)
+else:
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-print(f"\n Starting Training (LR: {learning_rate} | Device: {device})")
+print(f"\n Starting Training (Optimizer: {opt_choice.upper()} | LR: {learning_rate} | Device: {device})")
 for epoch in range(1, 101):
     total_loss = 0.0
     for x_batch, y_batch in dataloader:
         x_batch, y_batch = x_batch.to(device), y_batch.to(device)
         
-        optimizer.zero_grad()                  
+        optimizer.zero_grad()                   
         predictions = model(x_batch)            
         loss = criterion(predictions, y_batch) 
         loss.backward()                         
@@ -105,9 +109,9 @@ for epoch in range(1, 101):
     if epoch % 20 == 0 or epoch == 1:
         print(f"Epoch {epoch:03d}/100 | Loss: {average_loss:.4f}")
 
-print(f"Final Loss for lr={learning_rate}: {average_loss:.4f}")
+print(f"Final Loss for Optimizer={opt_choice.upper()} (lr={learning_rate}: {average_loss:.4f}")
 
-log_line = f"Seed: {SEED} | LR: {learning_rate} | Layers: 2 Hidden (32, 16) | Final Loss: {average_loss:.4f}\n"
+log_line = f"Seed: {SEED} | Optimizer: {opt_choice.upper()} | LR: {learning_rate} | Layers: 2 Hidden (32, 16) | Final Loss: {average_loss:.4f}\n"
 with open("experiment_log.txt", "a") as f:
     f.write(log_line)
 print("Log entry saved to 'experiment_log.txt'.\n")

@@ -1,2 +1,7 @@
 Seed: 42 | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
 Seed: 42 | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
+Seed: 42 | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
+Seed: 42 | LR: 0.001 | Layers: 2 Hidden (32, 16) | Final Loss: 57.0811
+Seed: 42 | Optimizer: ADAM | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
+Seed: 42 | Optimizer: ADAM | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
+Seed: 42 | Optimizer: SGD | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 184.7355
