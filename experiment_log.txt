@@ -1,0 +1,2 @@
+Seed: 42 | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
+Seed: 42 | LR: 0.01 | Layers: 2 Hidden (32, 16) | Final Loss: 53.5339
